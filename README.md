@@ -2,11 +2,17 @@
  Kigali City Services & Places Directory is a flutter mobile application that will help Kigali residents locate and navigate to essential public services as well as leisure and lifestyle locations such as hospitals, police stations, public libraries, utility offices, restaurants, cafés, parks, and tourist attractions.
  ## Features
  -**User Authentication**: Sign up, Log in, log out email verification using Firebase Authentication.
+ 
  -**CRUD Operations**: Create, Read, Update, Delete listings created by the authenticated user.
+ 
  -**Search & Filter**: Search for listings by name and filter results based on category.
+ 
  -**Map Intergration**: View location on the map with marks for  all location in your application.
+ 
  -**Navigation**: BottomNavigationBar with at all the following screens Directory, My Listings, Map, Settings.
+ 
  -**User listing**: Every user will manage the own listings separately.
+ 
  -**Settings**: It will show the authenticated user's profile information and include a toggle for enabling or disabling location-based notifications.
 
  ## State Management
@@ -72,7 +78,7 @@ lib/
 ### Installation
 1. Clone the repository
    ```bash
-   git clone
+   git clone https://github.com/Yvette334/kigali-services.git
    cd Kigali-services.kigali
    ```
 2. Install dependecies
