@@ -23,7 +23,7 @@ class _AddEditListingScreenState extends State<AddEditListingScreen> {
   late TextEditingController _lngController;
   String _selectedCategory = 'Hospital';
 
-  final List<String> _categories = ['Hospital', 'Police Station', 'Library', 'Restaurant', 'Café', 'Park', 'Tourist Attraction'];
+  final List<String> _categories = ['Hospital', 'Police Station', 'Library', 'Restaurant', 'Café', 'Park', 'Tourist Attraction', 'others'];
   final navyblue = const Color(0xFF0A172F);
   final yellow = const Color(0xFFF7C351);
 

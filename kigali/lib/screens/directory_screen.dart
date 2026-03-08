@@ -14,7 +14,7 @@ class DirectoryScreen extends StatefulWidget {
 class _DirectoryScreenState extends State<DirectoryScreen> {
   final navyblue = const Color(0xFF0A172F);
   final yellow = const Color(0xFFF7C351);
-  final categories = ['All', 'Hospital', 'Police Station', 'Library', 'Restaurant', 'Café', 'Park', 'Tourist Attraction'];
+  final categories = ['All', 'Hospital', 'Police Station', 'Library', 'Restaurant', 'Café', 'Park', 'Tourist Attraction', 'others'];
   
   // Simple variables for human-like code
   List<Listing> allListings = [];
