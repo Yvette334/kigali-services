@@ -245,7 +245,7 @@ class DetailScreen extends StatelessWidget {
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(ctx),
-                                child: const Text('OK', style: TextStyle(color: yellow)),
+                                child:  Text('OK', style: TextStyle(color: yellow)),
                               ),
                             ],
                           ),
