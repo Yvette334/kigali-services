@@ -93,12 +93,19 @@ lib/
    ```
 ## Categories
 -Hospital
+
 -Police Station
+
 -Library
+
 -Restaurant
+
 -Café
+
 -Park
+
 -Tourist Attraction
+
 -other
 
 ## Navigation Structure
