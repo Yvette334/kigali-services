@@ -20,7 +20,9 @@
  This application uses the provider as its state management. And the logic and UI are separated.
 
  -**Listing Provider**: Manages listing state, search and filter operations.
+ 
  -**Auth Service**: Handles authenticationstate.
+ 
  -**FireStore Service**: It is for all the Firestore Operations.
 
  ## Firestore Structure
@@ -102,14 +104,22 @@ lib/
 ## Navigation Structure
 These are the BottomNavigation and their four main screens
 1.**Directory**: Shows all the listings with search and filters.
+
 2.**My listings**: manage and view the listings .
+
 3.**Map**: Shows all the locations on the map.
+
 4.**Settings**: View the profile and toggles.
+
 ## Key technologies
 -**Flutter**: Cross-platform mobile framework
+
 -**Firebase Authentication**: For user authentication with email verification
+
 -**Cloud Firestore**: NoSQL database
+
 -**Provider**: State management
+
 -**Open Street Map**: Map Integration
 
 
