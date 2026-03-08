@@ -8,6 +8,7 @@ import './screens/signup.dart';
 import './screens/login.dart';
 import './screens/verify_email_screen.dart';
 import './screens/kigali_directory.dart';
+import './providers/listing_provider.dart';
 
 
 void main() async {
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthService>(create: (_) => AuthService()),
+        ChangeNotifierProvider<ListingProvider>(create: (_) => ListingProvider()),
       ],
       child: MaterialApp(
         title: 'Kigali City Services',
