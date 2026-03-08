@@ -11,24 +11,28 @@ class KigaliDirectory extends StatefulWidget {
 }
 
 class _KigaliDirectoryState extends State<KigaliDirectory> {
-  int _currentIndex = 0; // This tracks which tab is selected
+  int _currentIndex = 0;
+  final  navyblue = const Color(0xFF0A172F);
+  final  yellow = const Color(0xFFF7C351); 
 
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
 
-    // This defines what shows in the middle of the screen
     Widget currentBody;
     if (_currentIndex == 0) {
-      currentBody = _buildFirestoreList(); // Show the list on the first tab
-    } else {
-      currentBody = Center(child: Text('Page ${_currentIndex + 1} Content'));
+      currentBody = _buildFirestoreList(); 
+    }else if(_currentIndex == 1){
+      currentBody = _buildDetailedListing();
+    }else {
+      currentBody = Center(child: Text('Page ${_currentIndex + 1} Content', style: TextStyle(color: Colors.white)));
     }
 
     return Scaffold(
+      backgroundColor: navyblue,
       appBar: AppBar(
+      backgroundColor: navyblue,
         title: const Text("Kigali City Services"),
-        backgroundColor: const Color(0xFF0A172F),
         foregroundColor: Colors.white,
         actions: [
           IconButton(
@@ -46,7 +50,7 @@ class _KigaliDirectoryState extends State<KigaliDirectory> {
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
-            _currentIndex = index; // This re-draws the screen
+            _currentIndex = index; 
           });
         },
         items: const [
@@ -64,7 +68,7 @@ class _KigaliDirectoryState extends State<KigaliDirectory> {
     );
   }
 
-  // This is your Firestore logic moved into a simple function
+ 
   Widget _buildFirestoreList() {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('services').snapshots(),
@@ -84,6 +88,55 @@ class _KigaliDirectoryState extends State<KigaliDirectory> {
                 title: Text(data['name'] ?? 'No Name'),
                 subtitle: Text(data['type'] ?? 'Service'),
                 trailing: const Icon(Icons.map_outlined),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+  Widget _buildDetailedListing(){
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('services').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) return const Center(child: Text('Error loading data', style: TextStyle(color: Colors.white70)));
+        if (snapshot.connectionState == ConnectionState.waiting) return Center(child: CircularProgressIndicator(color: yellow,));
+
+        final docs = snapshot.data!.docs;
+        return ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: docs.length,
+          itemBuilder: (context, index) {
+            final data = docs[index].data() as Map<String, dynamic>;
+            return Container(
+              margin: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.white10),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                data['name'] ?? 'Kigali Service',
+                              )
+                              )
+                          ]
+                        )
+                      ],
+                    ),
+                    )
+                ],
               ),
             );
           },

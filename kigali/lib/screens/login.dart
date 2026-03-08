@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../services/auth_services.dart';
 
 
@@ -19,7 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isLoading = false;
-
+  final Color navyblue = const Color(0xFF0A172F);
+  final Color yellow = const Color(0xFFF7C351);
 
   Future<void> _login() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
@@ -36,12 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
     try { 
-      String? result = await AuthService().signInWithEmailAndPassword(
+      String? result = await Provider.of<AuthService>(context, listen: false).signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
 
-      if (result == 'Sucess'){
+      if (result == 'Success'){
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Login successful')),
         );
@@ -66,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: navyblue,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -75,20 +77,20 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Header
-                Icon(Icons.check_circle_outline, size: 80, color: Colors.blue),
+                Icon(Icons.location_city, size: 80, color: yellow),
                 SizedBox(height: 16),
                 Text(
                   'Kigali Services',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                    color: yellow,
                   ),
                 ),
                 SizedBox(height: 8),
                 Text(
                   'Sign in to continue',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                  style: TextStyle(fontSize: 16, color: Colors.white70),
                 ),
                 SizedBox(height: 40),
 
@@ -96,10 +98,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Email Field
                 TextField(
                   controller: _emailController,
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'Email',
+                    labelStyle: const TextStyle(color: Colors.white70),
                     border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.email),
+                    prefixIcon: Icon(Icons.email, color: yellow),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white60),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: yellow)
+                    )
                   ),
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -109,10 +119,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Password Field
                 TextField(
                   controller: _passwordController,
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'Password',
+                    labelStyle: const TextStyle(color: Colors.white70),
                     border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.lock),
+                    prefixIcon: Icon(Icons.lock, color: yellow),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white60),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: yellow)
+                    )
                   ),
                   obscureText: true,
                   onSubmitted: (_) => _login(),
@@ -125,6 +143,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: yellow,
+                      foregroundColor: navyblue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8) )
+                    ),
                     onPressed: _isLoading ? null : _login,
                     child: _isLoading 
                         ? CircularProgressIndicator(color: Colors.white)
@@ -138,10 +162,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an account?"),
+                    Text("Don't have an account?", style: TextStyle(color: Colors.white70)),
                     TextButton(
                       onPressed: widget.showRegisterScreen,
-                      child: Text('Sign up'),
+                      child: Text('Sign up', style: TextStyle(color: yellow)),
                     ),
                   ],
                 ),
