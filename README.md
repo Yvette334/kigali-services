@@ -103,6 +103,7 @@ lib/
 
 ## Navigation Structure
 These are the BottomNavigation and their four main screens
+
 1.**Directory**: Shows all the listings with search and filters.
 
 2.**My listings**: manage and view the listings .
