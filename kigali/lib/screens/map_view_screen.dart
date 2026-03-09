@@ -15,7 +15,7 @@ class MapViewScreen extends StatefulWidget {
 
 class _MapViewScreenState extends State<MapViewScreen> {
   final MapController _mapController = MapController();
-  final  yellow = const Color.fromARGB(255, 28, 14, 98);
+  final yellow = const Color(0xFFF7C351);
 
   @override
   Widget build(BuildContext context) {
