@@ -26,16 +26,17 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _login() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill in all fields')),
+        const SnackBar(
+          content: Text('Please fill in all fields'),
+          backgroundColor: Colors.red,
+        ),
       );
       return;
     }
 
-
     setState(() {
       _isLoading = true;
     });
-
 
     try { 
       String? result = await Provider.of<AuthService>(context, listen: false).signInWithEmailAndPassword(
@@ -44,24 +45,52 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (result == 'Success'){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login successful')),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Login successful!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login has failed: $result')),
-        );
+        if (mounted) {
+          String errorMessage = result ?? 'Login failed';
+          if (errorMessage.contains('wrong password')) {
+            errorMessage = 'Incorrect password. Please try again.';
+          } else if (errorMessage.contains('user not found')) {
+            errorMessage = 'No account found with this email.';
+          } else if (errorMessage.contains('invalid email')) {
+            errorMessage = 'Invalid email address.';
+          } else if (errorMessage.contains('too many requests')) {
+            errorMessage = 'Too many failed attempts. Try again later.';
+          }
+          
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(errorMessage),
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 4),
+            ),
+          );
+        }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed: $e')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
 
-
-    setState(() {
-      _isLoading = false;
-    });
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
 

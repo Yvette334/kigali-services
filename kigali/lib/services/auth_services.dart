@@ -31,7 +31,7 @@ class AuthService extends ChangeNotifier {
       notifyListeners();
       return 'Success';
     } on FirebaseAuthException catch (e) {
-      return e.message;
+      return e.code;
     } catch (e){
       return e.toString();
     }
