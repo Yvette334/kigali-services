@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/listing_model.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -27,7 +28,7 @@ class DetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Map container with OpenStreetMap only
+            // Map container with OpenStreetMap
             Container(
               height: 250,
               margin: const EdgeInsets.only(bottom: 16),
@@ -44,12 +45,10 @@ class DetailScreen extends StatelessWidget {
                     maxZoom: 18,
                   ),
                   children: [
-                    // OpenStreetMap tiles
                     TileLayer(
                       urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                       userAgentPackageName: 'com.example.kigali',
                     ),
-                    // Location marker
                     MarkerLayer(
                       markers: [
                         Marker(
@@ -197,7 +196,7 @@ class DetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   
-                  // Location info button instead of navigation
+                  // Navigate button
                   Container(
                     width: double.infinity,
                     height: 56,
@@ -220,40 +219,21 @@ class DetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {
-                        // Show coordinates in a dialog
-                        showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            backgroundColor: navyblue,
-                            title: const Text('Location Coordinates', style: TextStyle(color: Colors.white)),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Latitude: ${listing.latitude.toStringAsFixed(6)}',
-                                  style: const TextStyle(color: Colors.white70),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Longitude: ${listing.longitude.toStringAsFixed(6)}',
-                                  style: const TextStyle(color: Colors.white70),
-                                ),
-                              ],
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(ctx),
-                                child:  Text('OK', style: TextStyle(color: yellow)),
-                              ),
-                            ],
-                          ),
-                        );
+                      onPressed: () async {
+                        final url = Uri.parse('https://www.openstreetmap.org/directions?from=&to=${listing.latitude},${listing.longitude}#map=15/${listing.latitude}/${listing.longitude}');
+                        if (await canLaunchUrl(url)) {
+                          await launchUrl(url, mode: LaunchMode.externalApplication);
+                        } else {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Could not open navigation')),
+                            );
+                          }
+                        }
                       },
-                      icon: const Icon(Icons.location_on),
+                      icon: const Icon(Icons.directions),
                       label: const Text(
-                        'VIEW COORDINATES',
+                        'NAVIGATE',
                         style: TextStyle(fontWeight: FontWeight.bold)
                       ),
                     ),
