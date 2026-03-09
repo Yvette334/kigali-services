@@ -56,13 +56,15 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         if (mounted) {
           String errorMessage = result ?? 'Login failed';
-          if (errorMessage.contains('wrong password')) {
+          if (errorMessage.contains('wrong-password')) {
             errorMessage = 'Incorrect password. Please try again.';
-          } else if (errorMessage.contains('user not found')) {
+          } else if (errorMessage.contains('user-not-found')) {
             errorMessage = 'No account found with this email.';
-          } else if (errorMessage.contains('invalid email')) {
+          } else if (errorMessage.contains('invalid-email')) {
             errorMessage = 'Invalid email address.';
-          } else if (errorMessage.contains('too many requests')) {
+          } else if (errorMessage.contains('invalid-credential')) {
+            errorMessage = 'Invalid email or password.';
+          } else if (errorMessage.contains('too-many-requests')) {
             errorMessage = 'Too many failed attempts. Try again later.';
           }
           
@@ -138,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: yellow)
-                    )
+                    ),
                   ),
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -159,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: yellow)
-                    )
+                    ),
                   ),
                   obscureText: true,
                   onSubmitted: (_) => _login(),

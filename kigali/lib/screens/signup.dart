@@ -24,25 +24,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final Color yellow = const Color(0xFFF7C351);
   //1: Implement register function
   Future<void> _register() async {
-    if (_emailController.text.isEmpty ||
+    if (_nameController.text.isEmpty ||
+        _emailController.text.isEmpty ||
         _passwordController.text.isEmpty ||
         _confirmPasswordController.text.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Please fill in all fields')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill in all fields'),
+          backgroundColor: Colors.red,
+        ),
+      );
       return;
     }
 
     if (_passwordController.text != _confirmPasswordController.text) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Passwords do not match')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Passwords do not match'),
+          backgroundColor: Colors.red,
+        ),
+      );
       return;
     }
 
     if (_passwordController.text.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Password must be at least 6 characters')),
+        const SnackBar(
+          content: Text('Password must be at least 6 characters'),
+          backgroundColor: Colors.red,
+        ),
       );
       return;
     }
@@ -127,6 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelText: 'Name',
+                        labelStyle: const TextStyle(color: Colors.white70),
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.person, color: yellow),
                         enabledBorder: const OutlineInputBorder(
@@ -146,6 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelText: 'Email',
+                        labelStyle: const TextStyle(color: Colors.white70),
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.email, color: yellow),
                         enabledBorder: const OutlineInputBorder(
@@ -165,6 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelText: 'Password',
+                        labelStyle: const TextStyle(color: Colors.white70),
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.lock, color: yellow),
                         enabledBorder: const OutlineInputBorder(
@@ -184,6 +197,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelText: 'Confirm Password',
+                        labelStyle: const TextStyle(color: Colors.white70),
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.lock_outline, color: yellow),
                         enabledBorder: const OutlineInputBorder(
