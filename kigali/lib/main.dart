@@ -42,7 +42,6 @@ class MyApp extends StatelessWidget {
 class AuthWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
     
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
